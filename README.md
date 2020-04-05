@@ -1,3 +1,9 @@
 Digital Image Processing 
 
-This project preform Brightness of given image 
+This project perform on the given image:
+Brightness 
+Contrast
+Range Filter 
+Median Filter
+Binarization 
+HSL
