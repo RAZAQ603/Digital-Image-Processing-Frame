@@ -1,34 +1,17 @@
 package com.FinalProj;
 
 
-
-
-
-
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 
-
 public class SplitPanePanel extends JPanel implements ListSelectionListener {
-
-
-
+    
     JLabel picture;
-   // JList<String> list;
     JSplitPane splitPane1,LeftSplitPane ;
-   // String[] imageNames = {"Bird", "Cat", "Dog", "Rabbit", "Pig", "dukeWaveRed"};
    JScrollPane LeftScrollPane, pictureScrollPane, toppScrollPane, bottommScrollPane;
-
-
     public SplitPanePanel(DigitalImageProcessing digitalImageProcessing) {
-       // list = new JList<>(imageNames);
-        //list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        //list.setSelectedIndex(0);
-        //list.addListSelectionListener(this);
-
-        //JScrollPane listScrollPane = new JScrollPane(list);
 
         LeftSplitPane = new JSplitPane();
         toppScrollPane = new JScrollPane();
@@ -60,31 +43,7 @@ public class SplitPanePanel extends JPanel implements ListSelectionListener {
 
         splitPane1.setPreferredSize(new Dimension(400, 200));
 
-        //updateLabel(imageNames[list.getSelectedIndex()]);
     }
-
-
-    /**
-    public void valueChanged(ListSelectionEvent e) {
-        JList list = (JList) e.getSource();
-        updateLabel(imageNames[list.getSelectedIndex()]);
-    }
-
-
-    protected void updateLabel(String name) {
-        ImageIcon icon = createImageIcon("images/" + name + ".gif");
-        picture.setIcon(icon);
-        if (icon != null) {
-            picture.setText(null);
-        } else {
-            picture.setText("Image not found");
-        }
-    }
-
-    public JList<String> getImageList() {
-        return list;
-    }
-     **/
 
 
     public JSplitPane getSplitPane() {
