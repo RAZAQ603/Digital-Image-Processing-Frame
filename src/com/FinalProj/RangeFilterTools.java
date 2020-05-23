@@ -1,70 +1,97 @@
-package com.FinalProj;
+package FrameComponent;
+
+
+
+
+
+
+import MathematicalOperations.ImagePixels;
+import MathematicalOperations.RangeFilter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
-public class RangeFilterTools extends JFrame {
+public class RangeFilterTools extends JPanel {
 
-    public JButton Result;
-    public JLabel title;
-    public JTextField txtRange;
+    private ImagePixels myImage;
 
-    public RangeFilterTools(DigitalImageProcessing DigitalImageProcessing )  {
+    public RangeFilterTools() {
+        initComponents();
+    }
 
-        setTitle("Binarization Tools");
-        setSize(350, 250);
-        JPanel Range1 = new JPanel();
-        add(Range1);
-        title = new JLabel();
-        txtRange = new JTextField();
-        Result = new JButton();
 
-        title.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setText("Range Filter");
-        title.setOpaque(true);
+    private void initComponents() {
 
-        txtRange.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        txtRange.setHorizontalAlignment(JTextField.CENTER);
+        JPanel Panel1 = new JPanel();
+        JLabel title = new JLabel();
+        txtRange = new  JTextField();
+        JButton ApplyButton = new JButton();
 
-        Result.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        Result.setText("APPLY");
-        Result.setFocusPainted(false);
-        Result.setFocusable(false);
+        setPreferredSize(new Dimension(350, 420));
 
-        Result.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                ResultActionPerformed(evt);
-            }
-            private void ResultActionPerformed(ActionEvent evt) {
-            }
-        });
 
-        GroupLayout Layout5 = new GroupLayout(Range1);
-        Range1.setLayout(Layout5);
-        Layout5.setHorizontalGroup(
-                Layout5.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(title, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                        .addGroup(GroupLayout.Alignment.TRAILING, Layout5.createSequentialGroup()
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtRange, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+        title.setFont(new  Font("Times", Font.PLAIN, 18));
+        title.setHorizontalAlignment(  SwingConstants.CENTER);
+        title.setText("Filter Per Range");
+
+        txtRange.setFont(new  Font("Times", Font.PLAIN, 14));
+        txtRange.setHorizontalAlignment(  JTextField.CENTER);
+
+        ApplyButton.setFont(new  Font("Times", Font.PLAIN, 12));
+        ApplyButton.setText("APPLY");
+        ApplyButton.setFocusPainted(false);
+        ApplyButton.setFocusable(false);
+        ApplyButton.addActionListener(this::ApplyButtonActionPerformed);
+
+        GroupLayout Panel1Layout = new   GroupLayout(Panel1);
+        Panel1.setLayout(Panel1Layout);
+        Panel1Layout.setHorizontalGroup(
+                Panel1Layout.createParallelGroup(  GroupLayout.Alignment.LEADING)
+                        .addComponent(title,   GroupLayout.Alignment.TRAILING,   GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                        .addGroup(  GroupLayout.Alignment.TRAILING, Panel1Layout.createSequentialGroup()
+                                .addContainerGap(  GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtRange,   GroupLayout.PREFERRED_SIZE, 160,GroupLayout.PREFERRED_SIZE)
                                 .addGap(93, 93, 93))
-                        .addGroup(Layout5.createSequentialGroup()
+                        .addGroup(Panel1Layout.createSequentialGroup()
                                 .addGap(119, 119, 119)
-                                .addComponent(Result, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(ApplyButton, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(  GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        Layout5.setVerticalGroup(
-                Layout5.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(Layout5.createSequentialGroup()
-                                .addComponent(title, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+        Panel1Layout.setVerticalGroup(
+                Panel1Layout.createParallelGroup(  GroupLayout.Alignment.LEADING)
+                        .addGroup(Panel1Layout.createSequentialGroup()
+                                .addComponent(title,   GroupLayout.PREFERRED_SIZE, 49,   GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtRange, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtRange,   GroupLayout.PREFERRED_SIZE, 30,   GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(Result, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ApplyButton, GroupLayout.PREFERRED_SIZE, 36,   GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 269, Short.MAX_VALUE))
         );
+
+
+        GroupLayout layoutLayout = new   GroupLayout(this);
+        this.setLayout(layoutLayout);
+        layoutLayout.setHorizontalGroup(
+                layoutLayout.createParallelGroup(  GroupLayout.Alignment.LEADING)
+                        .addComponent(Panel1, GroupLayout.DEFAULT_SIZE,   GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layoutLayout.setVerticalGroup(
+                layoutLayout.createParallelGroup(  GroupLayout.Alignment.LEADING)
+                        .addComponent(Panel1, GroupLayout.DEFAULT_SIZE,   GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+
     }
+
+
+    private void ApplyButtonActionPerformed( ActionEvent evt) {
+        BufferedImage image = new RangeFilter(DigitalImageProcessing.bufferedActualImage, Integer.parseInt(txtRange.getText())).applyToGray();
+        DigitalImageProcessing.bufferedActualImage = image;
+        DigitalImageProcessing.LabelImageActual.setIcon(new ImageIcon(image));
+    }
+
+
+    private JTextField txtRange;
 }
